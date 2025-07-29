@@ -1,0 +1,17 @@
+.alert {
+  padding: 12px 20px;
+  margin: 12px auto;
+  border-radius: 5px;
+  max-width: 500px;
+  text-align: center;
+  font-weight: bold;
+  font-family: sans-serif;
+}
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+}
+.alert-error {
+  background-color: #f8d7da;
+  color: #721c24;
+}
