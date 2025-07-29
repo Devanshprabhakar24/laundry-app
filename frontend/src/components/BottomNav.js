@@ -1,54 +1,44 @@
 import React from 'react';
-import { BottomNavigation, BottomNavigationAction, Paper } from '@mui/material';
-import { Home, Login, PersonAdd, ShoppingCart, Dashboard } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/authContext';
+import { AppBar, Toolbar, Typography, Button, Box } from '@mui/material';
 
-export default function BottomNav() {
-  const [value, setValue] = React.useState(0);
-  const navigate = useNavigate();
+const Navbar = () => {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-    if (user) {
-      // Navigation for logged-in users
-      switch (newValue) {
-        case 0: navigate('/'); break;
-        case 1: navigate('/dashboard'); break;
-        case 2: navigate('/order/new'); break;
-        case 3: logout(); navigate('/'); break;
-        default: break;
-      }
-    } else {
-      // Navigation for guests
-      switch (newValue) {
-        case 0: navigate('/'); break;
-        case 1: navigate('/login'); break;
-        case 2: navigate('/register'); break;
-        default: break;
-      }
-    }
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
   };
 
   return (
-    <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 1000 }} elevation={3}>
-      <BottomNavigation value={value} onChange={handleChange} showLabels>
-        {user ? (
-          <>
-            <BottomNavigationAction label="Home" icon={<Home />} />
-            <BottomNavigationAction label="Dashboard" icon={<Dashboard />} />
-            <BottomNavigationAction label="New Order" icon={<ShoppingCart />} />
-            <BottomNavigationAction label="Logout" icon={<Login />} />
-          </>
-        ) : (
-          <>
-            <BottomNavigationAction label="Home" icon={<Home />} />
-            <BottomNavigationAction label="Login" icon={<Login />} />
-            <BottomNavigationAction label="Register" icon={<PersonAdd />} />
-          </>
-        )}
-      </BottomNavigation>
-    </Paper>
+    <AppBar position="static" sx={{ backgroundColor: 'var(--bg-secondary)', borderBottom: '1px solid var(--border-color)' }}>
+      <Toolbar>
+        <Typography variant="h6" component={Link} to="/" sx={{ flexGrow: 1, color: 'inherit', textDecoration: 'none' }}>
+          LaundryPro
+        </Typography>
+        <Box>
+          {user ? (
+            <>
+              <Button color="inherit" component={Link} to="/dashboard">Dashboard</Button>
+              <Button color="inherit" component={Link} to="/order/new">New Order</Button>
+              <Button color="inherit" component={Link} to="/subscription">Subscription</Button>
+              {user.role === 'admin' && (
+                  <Button color="inherit" component={Link} to="/admin/dashboard">Admin</Button>
+              )}
+              <Button color="inherit" onClick={handleLogout}>Logout</Button>
+            </>
+          ) : (
+            <>
+              <Button color="inherit" component={Link} to="/login">Login</Button>
+              <Button color="inherit" component={Link} to="/register">Register</Button>
+            </>
+          )}
+        </Box>
+      </Toolbar>
+    </AppBar>
   );
-}
+};
+
+export default Navbar;

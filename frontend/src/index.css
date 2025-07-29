@@ -1,0 +1,38 @@
+/* --- Global White Theme --- */
+
+body {
+  margin: 0;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Color Palette - White Theme */
+  --bg-primary: #f4f6f8;      /* Main background (Light Gray) */
+  --bg-secondary: #ffffff;   /* Card and surface background (White) */
+  --text-primary: #212121;     /* Primary text (Dark Gray) */
+  --text-secondary: #616161;  /* Lighter text for subtitles */
+  --accent-primary: #3f51b5;  /* Your main blue color */
+  --accent-secondary: #5c6bc0; /* Lighter blue for hover effects */
+  --border-color: #e0e0e0;     /* Borders for cards and sections */
+
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* --- App Layout (No changes needed here) --- */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 240px;
+  background-color: var(--bg-secondary);
+  border-right: 1px solid var(--border-color);
+  padding: 20px;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 20px 40px;
+}

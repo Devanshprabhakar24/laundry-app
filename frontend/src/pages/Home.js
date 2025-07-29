@@ -1,11 +1,11 @@
 import React from 'react';
 import { Box, Button, Container, Typography, Grid, Paper } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/authContext'; // ✅ Import the useAuth hook
+import { useAuth } from '../context/authContext';
 
 export default function Home() {
   const navigate = useNavigate();
-  const { user } = useAuth(); // ✅ Get the current user state
+  const { user } = useAuth();
 
   const features = [
     { title: 'Fast Turnaround', text: 'Get clothes back in 24 hours' },
@@ -20,24 +20,28 @@ export default function Home() {
         <Typography variant="h2" gutterBottom sx={{ fontWeight: 600 }}>
           Welcome to LaundryPro
         </Typography>
-        <Typography variant="h5" color="text.secondary" paragraph>
+
+        {/* ✅ FIX: Set subtitle color to be visible */}
+        <Typography variant="h5" sx={{ color: 'var(--text-secondary)' }} paragraph>
           Premium laundry services at your doorstep
         </Typography>
+
         <Box sx={{ mt: 4 }}>
-          {/* ✅ SHOW THESE BUTTONS ONLY IF USER IS LOGGED IN */}
           {user && (
             <>
               <Button
                 variant="contained"
                 size="large"
-                sx={{ mr: 2 }}
+                sx={{ mr: 2, backgroundColor: 'var(--accent-primary)' }}
                 onClick={() => navigate('/order/new')}
               >
                 Place New Order
               </Button>
+              {/* ✅ FIX: Set outlined button colors to be visible */}
               <Button
                 variant="outlined"
                 size="large"
+                sx={{ borderColor: 'var(--text-secondary)', color: 'var(--text-primary)' }}
                 onClick={() => navigate('/track')}
               >
                 Track Order
@@ -45,13 +49,12 @@ export default function Home() {
             </>
           )}
 
-          {/* ✅ SHOW THESE LINKS ONLY IF USER IS A GUEST (NOT LOGGED IN) */}
           {!user && (
             <>
               <Button
                 variant="contained"
                 size="large"
-                sx={{ mr: 2 }}
+                sx={{ mr: 2, backgroundColor: 'var(--accent-primary)' }}
                 onClick={() => navigate('/login')}
               >
                 Login
@@ -59,6 +62,7 @@ export default function Home() {
               <Button
                 variant="outlined"
                 size="large"
+                sx={{ borderColor: 'var(--text-secondary)', color: 'var(--text-primary)' }}
                 onClick={() => navigate('/register')}
               >
                 Register
@@ -72,11 +76,21 @@ export default function Home() {
       <Grid container spacing={4} justifyContent="center" mt={6}>
         {features.map((item, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
-            <Paper elevation={3} sx={{ p: 3, textAlign: 'center' }}>
+            {/* ✅ FIX: Style feature cards for dark mode */}
+            <Paper
+              elevation={3}
+              sx={{
+                p: 3,
+                textAlign: 'center',
+                backgroundColor: 'var(--bg-secondary)',
+                color: 'var(--text-primary)',
+                border: '1px solid var(--border-color)',
+              }}
+            >
               <Typography variant="h5" gutterBottom sx={{ fontWeight: 500 }}>
                 {item.title}
               </Typography>
-              <Typography variant="body1">{item.text}</Typography>
+              <Typography variant="body1" sx={{ color: 'var(--text-secondary)' }}>{item.text}</Typography>
             </Paper>
           </Grid>
         ))}
